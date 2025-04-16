@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Param, Patch, Delete, Query, ParseIntPipe } from '@nestjs/common';
+import { Body, Controller, Get, Post, Param, Patch, Delete, Query, ParseIntPipe, ValidationPipe } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UsersService  } from './users.service';
 import { UpdatedUserDto } from './dto/update-user.dto';
@@ -19,12 +19,12 @@ findOne(@Param('id', ParseIntPipe) id: number) {
 
 }
 @Post() //POST /users
-create(@Body() createUserDto: CreateUserDto) {
+create(@Body(ValidationPipe) createUserDto: CreateUserDto) {
     return this.userService.create(createUserDto)
 
 }
 @Patch(':id') // Patch /users/:id
-update(@Param('id', ParseIntPipe) id: number, @Body() updateUserDto: UpdatedUserDto) {
+update(@Param('id', ParseIntPipe) id: number, @Body(ValidationPipe) updateUserDto: UpdatedUserDto) {
     return this.userService.update(id, updateUserDto)
 
 }
